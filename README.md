@@ -1,4 +1,4 @@
-# Python-ShopReadyServer
+# Python-ShopLinkServer
 A server for a synchronised shopping to do list manager
 
 Development language: Python
