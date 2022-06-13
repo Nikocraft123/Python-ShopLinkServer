@@ -7,7 +7,7 @@ import os
 # CONSTANTS
 
 # Credits
-NAME = "Shop Ready Server"
+NAME = "Shop Link Server"
 AUTHOR = "Nikocraft"
 VERSION = "Alpha 1.1"
 
@@ -17,10 +17,10 @@ LOG_INFO = 1
 LOG_WARNING = 2
 LOG_ERROR = 3
 LOG_LEVEL_NAMES = {
-    LOG_DEBUG: "Debug",
-    LOG_INFO: "Info",
-    LOG_WARNING: "Warning",
-    LOG_ERROR: "Error",
+    LOG_DEBUG: "DEBUG",
+    LOG_INFO: "INFO",
+    LOG_WARNING: "WARNING",
+    LOG_ERROR: "ERROR",
 }
 
 # Paths
