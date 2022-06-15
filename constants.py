@@ -26,6 +26,13 @@ LOG_LEVEL_NAMES = {
 # Paths
 PATH = os.path.dirname(__file__)
 DATA_PATH = f"{PATH}/data"
-LIST_PATH = f"{DATA_PATH}/lists"
+SERVER_PATH = f"{DATA_PATH}/servers"
 LOG_PATH = f"{DATA_PATH}/logs"
 CONFIG_PATH = f"{DATA_PATH}/configs"
+KEY_PATH = f"{DATA_PATH}/keys"
+
+# AES
+AES_CHUNK_SIZE = 32768
+
+# Control
+CONTROL_VER = "1.0"

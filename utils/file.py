@@ -16,7 +16,7 @@ def open_text(path: str, mode: str, encoding: str = "utf-8") -> IO:
         return open(path, mode, encoding=encoding)
     except OSError:
         open(path, "x", encoding=encoding)
-        open_text(path, mode, encoding)
+        return open_text(path, mode, encoding)
 
 
 # Open binary file
@@ -44,7 +44,7 @@ def load_json(path: str) -> dict:
 # Save json
 def save_json(path: str, data: dict) -> None:
     file = open_text(path, "w")
-    json.dump(data, file, indent=4, separators=(": ", ", "))
+    json.dump(data, file, indent=4, separators=(", ", ": "))
     file.close()
 
 
@@ -96,3 +96,18 @@ def is_dir(path: str) -> bool:
 # Full path
 def full_path(path: str) -> str:
     return os.path.abspath(path)
+
+
+# Base name
+def name(path: str) -> str:
+    return os.path.basename(path)
+
+
+# Directory
+def directory(path: str) -> str:
+    return os.path.dirname(path)
+
+
+# File size
+def file_size(path: str) -> int:
+    return os.path.getsize(path)

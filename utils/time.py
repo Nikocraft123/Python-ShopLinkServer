@@ -12,14 +12,24 @@ def sleep(duration: float) -> None:
     _time.sleep(duration)
 
 
+# Benchmark time
+def bench_time() -> float:
+    return _time.perf_counter()
+
+
+# Benchmark time in nanoseconds
+def bench_time_ns() -> int:
+    return _time.perf_counter_ns()
+
+
 # Run time
 def run_time() -> float:
-    return _time.perf_counter()
+    return _time.process_time()
 
 
 # Run time in nanoseconds
 def run_time_ns() -> int:
-    return _time.perf_counter_ns()
+    return _time.process_time_ns()
 
 
 # Absolute time since epoch
