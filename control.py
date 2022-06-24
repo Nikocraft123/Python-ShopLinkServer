@@ -218,7 +218,7 @@ class Control(Thread):
                 continue
 
             # Start handling
-            self.logger.info(f"Successfully connected with client {ip}:{port}! [CLIENT VERSION: {version}]")
+            self.logger.info(f"Successfully connected with client {ip}:{port} (Version: {version})!")
             self.handle_client(aes.get_key(password), client, ip, port)
 
         # Log info
@@ -230,7 +230,41 @@ class Control(Thread):
         # Set the timeout
         socket.settimeout(0.5)
 
+        # Define the close message
+        close_msg = ""
+
+        # Receiving loop
+        while not self.exit:
+
+            # Receive data
+            data = self.receive(key, socket)
+
+            # Check for connection lost
+            if type(data) == bool:
+                if data:
+                    close_msg = "Reason unknown ..."
+                    break
+                continue
+
+            # Log info
+            self.logger.info(f"Command issued: {data.decode('utf-8')}")
+
+            # Handle command
+            match data.decode("utf-8").strip().split(" ")[0].lower():
+                case "stop":
+                    self.server.exit = True
+                    close_msg = "Server closed ..."
+                    break
+                case "exit":
+                    close_msg = "Disconnected ..."
+                    break
+                case other:
+                    self.send_msg(key, socket, "Invalid command! Type 'help' for more information ...")
+
+        # Close the socket
+        self.logger.info(f"Lost connection with {ip}:{port}! {close_msg}")
         socket.close()
+
 
     # STATIC METHODS
 
@@ -266,7 +300,7 @@ class Control(Thread):
 
     # Receive
     @staticmethod
-    def receive(key: bytes, socket: so.socket) -> bytes | None:
+    def receive(key: bytes, socket: so.socket) -> bytes | bool:
 
         try:
 
@@ -279,7 +313,12 @@ class Control(Thread):
             # Decrypt and return the data
             return aes.decrypt_bytes(key, encrypted_data)
 
-        except (so.error, so.timeout):
+        except so.timeout:
 
-            # Return none
-            return None
+            # Return false
+            return False
+
+        except (so.error, ValueError):
+
+            # Return true
+            return True
